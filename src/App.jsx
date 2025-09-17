@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef } from "react";
 import Confetti from "react-confetti";
-import { Fireworks } from "@fireworks-js/react"; // Import fireworks
+import { Fireworks } from "@fireworks-js/react";
 import { Volume2, VolumeX } from "lucide-react";
-import BirthdayBg from "./assets/BirthdayBg.jpg"; // Import background image
+import BirthdayBg from "./assets/BirthdayBg.jpg";
 import p1 from "./assets/p1.jpg";
 import p2 from "./assets/p2.jpg";
-import bgMusic from "./assets/BgMusic.mp3"; // Import bg music
+import bgMusic from "./assets/BgMusic.mp3";
 
 export default function BirthdayApp() {
   const [showWelcome, setShowWelcome] = useState(true);
@@ -16,7 +16,7 @@ export default function BirthdayApp() {
 
   const triggerConfetti = () => {
     setShowConfetti(true);
-    setTimeout(() => setShowConfetti(false), 5000);
+    setTimeout(() => setShowConfetti(false), 55000);
   };
 
   const handleEnter = () => {
@@ -45,6 +45,7 @@ export default function BirthdayApp() {
     }
   }, []);
 
+  // Sparkles
   const Sparkles = () => {
     return (
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -66,6 +67,35 @@ export default function BirthdayApp() {
     );
   };
 
+  // Bigger Balloons 🎈
+  const Balloons = () => {
+    const colors = ["#ff6b6b", "#ffd93d", "#6bcB77", "#4dabf7", "#d98aff"];
+    return (
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {Array.from({ length: 10 }).map((_, i) => (
+          <div
+            key={i}
+            className="absolute flex flex-col items-center animate-float-slow"
+            style={{
+              left: `${5 + Math.random() * 90}%`,
+              bottom: "-160px",
+              animationDuration: `${8 + Math.random() * 5}s`,
+              animationDelay: `${i * 2}s`,
+            }}
+          >
+            <div
+              className="w-20 h-28 rounded-full shadow-lg relative"
+              style={{ background: colors[i % colors.length] }}
+            >
+              <div className="absolute bottom-[-10px] left-1/2 transform -translate-x-1/2 w-3 h-3 bg-gray-700 rounded-full"></div>
+            </div>
+            <div className="w-1 h-16 bg-gray-400"></div>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
   if (showWelcome) {
     return (
       <div
@@ -76,12 +106,12 @@ export default function BirthdayApp() {
         <div className="relative z-10 flex flex-col items-center">
           <div className="flex gap-4 mb-6">
             <img
-              src={p1}
+              src={p2}
               alt="Person 1"
               className="w-24 h-24 object-cover rounded-full border-4 border-white shadow-lg"
             />
             <img
-              src={p2}
+              src={p1}
               alt="Person 2"
               className="w-24 h-24 object-cover rounded-full border-4 border-white shadow-lg"
             />
@@ -130,7 +160,9 @@ export default function BirthdayApp() {
       </button>
 
       <Sparkles />
+      <Balloons />
 
+      {/* Cake */}
       <div className="relative flex flex-col items-center mt-24 z-10">
         <div className="absolute -top-20 flex flex-col items-center">
           <div className="w-4 h-16 bg-white rounded-t-md relative">
@@ -183,8 +215,13 @@ export default function BirthdayApp() {
           0%, 100% { transform: translateY(0) scaleX(1); opacity: 1; }
           50% { transform: translateY(-3px) scaleX(1.2); opacity: 0.7; }
         }
+        @keyframes floatUp {
+          0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+          100% { transform: translateY(-110vh) rotate(10deg); opacity: 0.9; }
+        }
         .animate-drip { animation: drip 2s infinite ease-in-out; }
         .animate-flame { animation: flame 0.5s infinite alternate; }
+        .animate-float-slow { animation: floatUp linear infinite; }
         .neon-text {
           text-shadow:
             0 0 5px #3b82f6,
