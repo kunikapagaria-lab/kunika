@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fireworks-js/react": "^2.10.8",
     "lucide-react": "^0.469.0",
     "react": "^19.1.1",
     "react-confetti": "^6.1.0",
